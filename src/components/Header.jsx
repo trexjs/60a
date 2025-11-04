@@ -10,6 +10,7 @@ const Header = ({ onDemoClick }) => {
 
   const productItems = [
     { name: 'Product Overview', description: 'Data intelligence platform for delivering embedded AI agents', icon: <BarChart3 className="h-5 w-5" />, href: '/#features', category: 'FEATURED' },
+    { name: 'Form Builder', description: 'Create powerful online forms with AI and automation', icon: <FileText className="h-5 w-5" />, href: '/products/formbuilder', category: 'FEATURED' },
     { name: 'Business Intelligence', description: 'Actionable analytics', icon: <BarChart3 className="h-5 w-5" />, href: '/#features', category: 'EXPLORE GOODDATA' },
     { name: 'Analytics Lake', description: 'Composable data service layer', icon: <Shield className="h-5 w-5" />, href: '/#features', category: 'EXPLORE GOODDATA' },
     { name: 'AI Assistant', description: 'Conversational analytics', icon: <Zap className="h-5 w-5" />, href: '/#features', category: 'EXPLORE GOODDATA' },
@@ -37,6 +38,7 @@ const Header = ({ onDemoClick }) => {
   ];
 
   return (
+    <>
     <header className="bg-white/95 backdrop-blur-md shadow-sm sticky top-0 z-50 w-full border-b border-gray-100">
       <nav className="px-4 sm:px-6 lg:px-8" aria-label="Top">
         <div className="flex items-center justify-between py-4 lg:py-5 min-h-[60px]">
@@ -181,13 +183,11 @@ const Header = ({ onDemoClick }) => {
             >
               Request Demo
             </button>
-          </div>
-
-          {/* Mobile menu button */}
-          <div className="lg:hidden flex-shrink-0 ml-4">
+            
+            {/* Mobile menu button */}
             <button
               type="button"
-              className="bg-white p-2 rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
+              className="lg:hidden bg-white p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 transition-colors"
               onClick={() => setMobileMenuOpen(true)}
             >
               <span className="sr-only">Open menu</span>
@@ -196,69 +196,71 @@ const Header = ({ onDemoClick }) => {
           </div>
         </div>
 
-        {/* Mobile menu */}
-        <div
-          className={`${
-            mobileMenuOpen ? 'block' : 'hidden'
-          } lg:hidden bg-white fixed inset-0 overflow-y-auto`}
-          style={{ zIndex: 9999 }}
-        >
-          <div className="flex items-center justify-between p-4 border-b border-gray-200">
-            <span className="text-2xl font-bold text-blue-600">DataInsight</span>
-            <button
-              type="button"
-              className="bg-white rounded-md p-2 text-gray-400 hover:text-gray-500"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <span className="sr-only">Close menu</span>
-              <X className="h-6 w-6" aria-hidden="true" />
-            </button>
-          </div>
-          <div className="px-4 pt-2 pb-3 space-y-1">
-            {mobileNavigation.map((item, index) => (
-              <Link
-                key={index}
-                to={item.href}
-                className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <div className="flex items-center">
-                  {item.icon && (
-                    <div className="mr-3 text-blue-600">
-                      {item.icon}
-                    </div>
-                  )}
-                  <div>
-                    <div className="font-semibold">{item.name}</div>
-                    {item.description && (
-                      <div className="text-xs text-gray-500">{item.description}</div>
-                    )}
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-          <div className="px-4 py-4 border-t border-gray-200">
-            <Link
-              to="/login"
-              className="block w-full text-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-blue-700 bg-blue-50 hover:bg-blue-100 mb-3"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Sign in
-            </Link>
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onDemoClick();
-              }}
-              className="block w-full text-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
-            >
-              Request Demo
-            </button>
-          </div>
-        </div>
       </nav>
     </header>
+    
+    {/* Mobile menu - Outside header for proper z-index */}
+    {mobileMenuOpen && (
+      <div
+        className="lg:hidden bg-white fixed inset-0 overflow-y-auto"
+        style={{ zIndex: 99999 }}
+      >
+        <div className="flex items-center justify-between p-4 border-b border-gray-200">
+          <span className="text-2xl font-bold text-blue-600">DataInsight</span>
+          <button
+            type="button"
+            className="bg-white rounded-md p-2 text-gray-400 hover:text-gray-500"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            <span className="sr-only">Close menu</span>
+            <X className="h-6 w-6" aria-hidden="true" />
+          </button>
+        </div>
+        <div className="px-4 pt-2 pb-3 space-y-1">
+          {mobileNavigation.map((item, index) => (
+            <Link
+              key={index}
+              to={item.href}
+              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <div className="flex items-center">
+                {item.icon && (
+                  <div className="mr-3 text-blue-600">
+                    {item.icon}
+                  </div>
+                )}
+                <div>
+                  <div className="font-semibold">{item.name}</div>
+                  {item.description && (
+                    <div className="text-xs text-gray-500">{item.description}</div>
+                  )}
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+        <div className="px-4 py-4 border-t border-gray-200">
+          <Link
+            to="/login"
+            className="block w-full text-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-blue-700 bg-blue-50 hover:bg-blue-100 mb-3"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Sign in
+          </Link>
+          <button
+            onClick={() => {
+              setMobileMenuOpen(false);
+              onDemoClick();
+            }}
+            className="block w-full text-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+          >
+            Request Demo
+          </button>
+        </div>
+      </div>
+    )}
+    </>
   );
 };
 
