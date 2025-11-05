@@ -1,8 +1,9 @@
 {
-  "name": "my-saas-site",
+  "name": "60a",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
+  "homepage": "https://60a.xlox.in",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
